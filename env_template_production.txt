@@ -1,0 +1,12 @@
+# Production Environment Variables for Vercel
+# Copy these to your Vercel dashboard environment variables
+
+SUPABASE_URL=https://your-project-id.supabase.co
+SUPABASE_KEY=your-supabase-anon-key
+FLASK_SECRET_KEY=your-random-secret-key-here
+
+# Instructions:
+# 1. Replace the values above with your actual Supabase credentials
+# 2. Generate a random FLASK_SECRET_KEY (you can use: python -c "import secrets; print(secrets.token_hex(32))")
+# 3. Add these as environment variables in your Vercel dashboard
+# 4. Update the default server URL in safe-cli-installer.sh with your Vercel app URL

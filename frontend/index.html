@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe CLI Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <h1>Safe CLI</h1>
+                </div>
+                <div class="user-info">
+                    <span class="user-name" id="userName">Loading...</span>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Sidebar -->
+            <nav class="sidebar">
+                <ul class="nav-menu">
+                    <li class="nav-item active" data-tab="endpoints">
+                        <i class="fas fa-server"></i>
+                        <span>Endpoints</span>
+                    </li>
+                    <li class="nav-item" data-tab="blacklist">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Blacklist</span>
+                    </li>
+                    <li class="nav-item" data-tab="requests">
+                        <i class="fas fa-bell"></i>
+                        <span>Requests</span>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Content Area -->
+            <div class="content">
+                <!-- Endpoints Tab -->
+                <div id="endpoints-tab" class="tab-content active">
+                    <div class="tab-header">
+                        <h2>Registered Endpoints</h2>
+                        <button class="btn btn-primary" onclick="refreshEndpoints()">
+                            <i class="fas fa-arrow-rotate-right"></i>
+                            Refresh
+                        </button>
+                    </div>
+                    
+                    <!-- Installation Instructions -->
+                    <div class="installation-section">
+                        <div class="installation-card">
+                            <div class="installation-header">
+                                <i class="fas fa-download"></i>
+                                <h3>Install Safe CLI on Endpoint</h3>
+                            </div>
+                            <div class="installation-content">
+                                <div class="installation-warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <div>
+                                        <h4>⚠️ IMPORTANT: Use SOURCE Command</h4>
+                                        <p>You must use <code>source ./safe-cli-installer.sh</code> (not <code>./safe-cli-installer.sh</code>) to ensure command aliases are properly activated in your current shell.</p>
+                                    </div>
+                                </div>
+                                
+                                <p>One comprehensive installer that handles everything: authentication, registration, and installation type selection:</p>
+                                
+                                <div class="installation-steps">
+                                    <div class="step">
+                                        <div class="step-number">1</div>
+                                        <div class="step-content">
+                                            <h4>Download Installer</h4>
+                                            <p>Download the Safe CLI installer script:</p>
+                                            <div class="download-section">
+                                                <button class="btn btn-secondary" onclick="downloadInstaller()">
+                                                    <i class="fas fa-download"></i>
+                                                    Download safe-cli-installer.sh
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="step">
+                                        <div class="step-number">2</div>
+                                        <div class="step-content">
+                                            <h4>Make Executable</h4>
+                                            <p>Make the script executable:</p>
+                                            <div class="code-block">
+                                                <code>chmod +x safe-cli-installer.sh</code>
+                                                <button class="copy-btn" onclick="copyToClipboard('chmod +x safe-cli-installer.sh')">
+                                                    <i class="fas fa-copy"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="step">
+                                        <div class="step-number">3</div>
+                                        <div class="step-content">
+                                            <h4>Source Installer (RECOMMENDED)</h4>
+                                            <p><strong>IMPORTANT:</strong> SOURCE the script to ensure aliases are activated in your current shell:</p>
+                                            <div class="code-block">
+                                                <code>source ./safe-cli-installer.sh</code>
+                                                <button class="copy-btn" onclick="copyToClipboard('source ./safe-cli-installer.sh')">
+                                                    <i class="fas fa-copy"></i>
+                                                </button>
+                                            </div>
+                                            <p class="step-note">⚠️ If you run <code>./safe-cli-installer.sh</code> instead, aliases won't be active in your current shell.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="step">
+                                        <div class="step-number">4</div>
+                                        <div class="step-content">
+                                            <h4>Alternative: Execute Script</h4>
+                                            <p>If you prefer to execute the script (aliases won't be active in current shell):</p>
+                                            <div class="code-block">
+                                                <code>./safe-cli-installer.sh</code>
+                                                <button class="copy-btn" onclick="copyToClipboard('./safe-cli-installer.sh')">
+                                                    <i class="fas fa-copy"></i>
+                                                </button>
+                                            </div>
+                                            <p class="step-note">⚠️ After execution, you'll need to manually run: <code>source safe-cli-agent.sh</code> to activate aliases.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="step">
+                                        <div class="step-number">5</div>
+                                        <div class="step-content">
+                                            <h4>Follow Setup</h4>
+                                            <p>The installer will ask for:</p>
+                                            <ul>
+                                                <li>Safe CLI server URL (default: <code>https://your-app.vercel.app</code>)</li>
+                                                <li>Your username and password</li>
+                                                <li>Your root user ID</li>
+                                                <li>Installation type (Global or Single Terminal)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="installation-notes">
+                                    <h4>What the Installer Does:</h4>
+                                    <div class="installation-types">
+                                        <div class="type-card">
+                                            <i class="fas fa-user-check"></i>
+                                            <h5>Authentication</h5>
+                                            <p>Prompts for username/password and authenticates with the dashboard.</p>
+                                        </div>
+                                        <div class="type-card">
+                                            <i class="fas fa-server"></i>
+                                            <h5>Endpoint Registration</h5>
+                                            <p>Automatically registers the endpoint with the dashboard server.</p>
+                                        </div>
+                                        <div class="type-card">
+                                            <i class="fas fa-cogs"></i>
+                                            <h5>Installation Type</h5>
+                                            <p>Lets you choose between global or single-terminal installation.</p>
+                                        </div>
+                                        <div class="type-card">
+                                            <i class="fas fa-shield-alt"></i>
+                                            <h5>Error Handling</h5>
+                                            <p>Includes all fixes for endpoint deletion and connection issues.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="endpoints-grid" id="endpointsGrid">
+                        <div class="loading-state">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading endpoints...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blacklist Tab -->
+                <div id="blacklist-tab" class="tab-content">
+                    <div class="tab-header">
+                        <h2>Command Blacklist</h2>
+                        <button class="btn btn-primary" onclick="saveBlacklist()">
+                            <i class="fas fa-check"></i>
+                            Save Changes
+                        </button>
+                    </div>
+                    <div class="blacklist-editor">
+                        <div class="editor-header">
+                            <p>Enter commands to block (one per line):</p>
+                        </div>
+                        <textarea id="blacklistTextarea" placeholder="rm&#10;sudo&#10;fdisk&#10;mkfs"></textarea>
+                    </div>
+                </div>
+
+                <!-- Requests Tab -->
+                <div id="requests-tab" class="tab-content">
+                    <div class="tab-header">
+                        <h2>Pending Requests</h2>
+                        <button class="btn btn-primary" onclick="refreshRequests()">
+                            <i class="fas fa-arrow-rotate-right"></i>
+                            Refresh
+                        </button>
+                    </div>
+                    <div class="requests-list" id="requestsList">
+                        <div class="loading-state">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading requests...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Confirm Action</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="modalMessage">Are you sure you want to perform this action?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-danger" id="confirmBtn" onclick="confirmAction()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
