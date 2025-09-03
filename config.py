@@ -21,3 +21,12 @@ class Config:
     
     # Debug mode (should be False in production)
     DEBUG = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
+    
+    # Clear any proxy-related environment variables that might interfere with Supabase
+    @staticmethod
+    def clear_proxy_env():
+        """Clear proxy environment variables that might cause issues with Supabase"""
+        proxy_vars = ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 'ALL_PROXY', 'all_proxy']
+        for var in proxy_vars:
+            if var in os.environ:
+                del os.environ[var]

@@ -28,7 +28,19 @@ def get_supabase_client() -> Client:
         print("Please create a .env file with your Supabase credentials")
         raise Exception("Supabase URL and Key must be set in environment variables")
     
-    return create_client(Config.SUPABASE_URL, Config.SUPABASE_KEY)
+    try:
+        # Clear any proxy environment variables that might cause issues
+        Config.clear_proxy_env()
+        
+        # Create client with explicit parameters to avoid proxy issues
+        client = create_client(
+            supabase_url=Config.SUPABASE_URL,
+            supabase_key=Config.SUPABASE_KEY
+        )
+        return client
+    except Exception as e:
+        print(f"ERROR: Failed to create Supabase client: {str(e)}")
+        raise Exception(f"Failed to initialize Supabase client: {str(e)}")
 
 # --- Authentication Helpers ---
 def hash_password(password):
