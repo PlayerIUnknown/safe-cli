@@ -11,7 +11,7 @@ from config import Config
 # Initialize the Flask application
 app = Flask(__name__)
 app.config.from_object(Config)
-app.secret_key = 'your-secret-key-change-in-production'  # Change this in production!
+app.secret_key = Config.SECRET_KEY
 
 # Configure session to work properly
 app.config['SESSION_COOKIE_HTTPONLY'] = True
