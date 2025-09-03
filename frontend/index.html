@@ -199,6 +199,27 @@
                             Save Changes
                         </button>
                     </div>
+                    
+                    <!-- Important Notice -->
+                    <div class="blacklist-notice">
+                        <div class="notice-card">
+                            <div class="notice-header">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <h4>⚠️ IMPORTANT: After Adding New Commands</h4>
+                            </div>
+                            <div class="notice-content">
+                                <p>When you add new commands to the blacklist, you need to <strong>re-source the agent script</strong> on all your endpoints to activate the new command blocking:</p>
+                                <div class="code-block">
+                                    <code>source safe-cli-agent.sh</code>
+                                    <button class="copy-btn" onclick="copyToClipboard('source safe-cli-agent.sh')">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                                <p class="notice-note">This ensures that new commands are properly aliased and will be intercepted for approval.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="blacklist-editor">
                         <div class="editor-header">
                             <p>Enter commands to block (one per line):</p>
