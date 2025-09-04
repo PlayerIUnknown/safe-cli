@@ -488,10 +488,34 @@ function displayRequests(requests) {
         return;
     }
     
-    console.log('DEBUG: Displaying', Object.keys(requests).length, 'requests');
+    // Filter out expired requests on the frontend
+    const currentTime = Date.now();
+    const validRequests = {};
+    Object.entries(requests).forEach(([reqId, req]) => {
+        const requestTime = new Date(req.timestamp).getTime();
+        const elapsedSeconds = Math.floor((currentTime - requestTime) / 1000);
+        if (elapsedSeconds < 30) {
+            validRequests[reqId] = req;
+        }
+    });
     
-    list.innerHTML = Object.entries(requests).map(([reqId, req]) => {
-        const timeLeft = Math.max(0, 30 - Math.floor((Date.now() / 1000) - new Date(req.timestamp).getTime() / 1000));
+    if (Object.keys(validRequests).length === 0) {
+        list.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-clock"></i>
+                <p>No pending requests</p>
+            </div>
+        `;
+        return;
+    }
+    
+    console.log('DEBUG: Displaying', Object.keys(validRequests).length, 'valid requests');
+    
+    list.innerHTML = Object.entries(validRequests).map(([reqId, req]) => {
+        const requestTime = new Date(req.timestamp).getTime();
+        const currentTime = Date.now();
+        const elapsedSeconds = Math.floor((currentTime - requestTime) / 1000);
+        const timeLeft = Math.max(0, 30 - elapsedSeconds);
         const timeClass = timeLeft < 10 ? 'warning' : 'ok';
         
         return `
