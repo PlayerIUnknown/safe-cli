@@ -17,7 +17,13 @@ A comprehensive command-line security solution that provides real-time command b
 - **Login**: Use the demo credentials or create a new account
 - **Test Features**: Full dashboard functionality available
 - **Install Endpoints**: Download and test the agent on your systems
-- **Real-time**: All features work in real-time with live data
+- **Real-time**: All features work in real
+
+https://github.com/user-attachments/assets/83974900-5ec3-46fe-902f-4d0dbfbc0b79
+
+-time with live data
+
+  
 
 ## 📋 Table of Contents
 
